@@ -1,25 +1,38 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'NOTIFICATION_EMAIL', defaultValue: 'qasimalik@gmail.com', description: 'Evaluator email address for deployment notification')
+    }
+
+    triggers {
+        githubPush()
+    }
+
     environment {
         // ── Identity ───────────────────────────────────────────────────────
-        STUDENT_ID     = 'SP23-BAI-031'
-        APP_NAME       = 'devops-labmidterm-sp23-bai-031'
+        STUDENT_ID         = 'SP23-BAI-031'
+        APP_NAME           = 'devops-labmidterm-sp23-bai-031'
 
         // ── Docker ─────────────────────────────────────────────────────────
-        DOCKER_IMAGE   = "faiqster/${APP_NAME}"
-        DOCKER_TAG     = "${BUILD_NUMBER}"
+        DOCKER_IMAGE       = "faiqster/${APP_NAME}"
+        DOCKER_TAG         = "${BUILD_NUMBER}"
 
         // ── AWS EC2 ────────────────────────────────────────────────────────
-        EC2_HOST       = '3.110.121.46'
-        EC2_USER       = 'ubuntu'
-        CONTAINER_PORT = '8000'
-        HOST_PORT      = '8000'
-        CONTAINER_NAME = "${APP_NAME}"
+        EC2_HOST           = '3.110.121.46'
+        EC2_USER           = 'ubuntu'
+        CONTAINER_PORT     = '8000'
+        HOST_PORT          = '8000'
+        CONTAINER_NAME     = "${APP_NAME}"
+
+        // ── Email ──────────────────────────────────────────────────────────
+        SENDER_EMAIL       = 'm.faiq.khan78@gmail.com'
+        NOTIFICATION_EMAIL = "${params.NOTIFICATION_EMAIL ?: 'qasimalik@gmail.com'}"
 
         // ── Jenkins credential IDs
-        SSH_CRED_ID    = 'ec2-pem-key'
-        DOCKER_CRED_ID = 'dockerhub-creds'
+        SSH_CRED_ID        = 'ec2-pem-key'
+        DOCKER_CRED_ID     = 'dockerhub-creds'
+        GMAIL_CRED_ID      = 'gmail-app-password'
     }
 
     options {
@@ -200,7 +213,8 @@ PYEOF
     // ── Post-build notifications ───────────────────────────────────────────
     post {
         success {
-            echo """
+            script {
+                echo """
 ╔══════════════════════════════════════════════╗
 ║  DEPLOYMENT SUCCESSFUL                       ║
 ║  Student : ${STUDENT_ID}                     ║
@@ -208,6 +222,17 @@ PYEOF
 ║  Commit  : ${env.GIT_COMMIT_SHORT}           ║
 ║  App URL : http://${EC2_HOST}:${HOST_PORT}   ║
 ╚══════════════════════════════════════════════╝"""
+
+                // ── Send Email Notification ──
+                try {
+                    withCredentials([string(credentialsId: GMAIL_CRED_ID, variable: 'GMAIL_APP_PASSWORD')]) {
+                        sh "python3 send_email.py --to '${NOTIFICATION_EMAIL}'"
+                    }
+                } catch (Exception e) {
+                    echo "Notice: gmail-app-password credential binding failed or not configured: ${e.message}"
+                    sh "python3 send_email.py --to '${NOTIFICATION_EMAIL}' || true"
+                }
+            }
         }
         failure {
             echo "Pipeline FAILED on stage. Check logs above."
