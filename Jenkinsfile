@@ -15,7 +15,7 @@ pipeline {
         APP_NAME           = 'devops-labmidterm-sp23-bai-031'
 
         // ── Docker ─────────────────────────────────────────────────────────
-        DOCKER_IMAGE       = "faiqster/${APP_NAME}"
+        DOCKER_IMAGE       = "faiqcodes/${APP_NAME}"
         DOCKER_TAG         = "${BUILD_NUMBER}"
 
         // ── AWS EC2 ────────────────────────────────────────────────────────

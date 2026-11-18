@@ -226,7 +226,7 @@
             </tr>
             <tr>
                 <td class="label">DockerHub Image Name</td>
-                <td class="value">faiqster/devops-labmidterm-sp23-bai-031:latest</td>
+                <td class="value">faiqcodes/devops-labmidterm-sp23-bai-031:latest</td>
             </tr>
         </table>
     </div>
@@ -397,7 +397,7 @@
         <li><strong>Stage 3 (Fetch Latest Data):</strong> Runs <code>generate_dataset.py --rows 300</code>.</li>
         <li><strong>Stage 4 (Train Model):</strong> Executes <code>train.py</code> and persists artifacts.</li>
         <li><strong>Stage 5 (Run Tests):</strong> Executes the 19 pytest cases. Build terminates on failure.</li>
-        <li><strong>Stage 6 (Build Docker Image):</strong> Tags image as <code>faiqster/devops-labmidterm-sp23-bai-031:latest</code>.</li>
+        <li><strong>Stage 6 (Build Docker Image):</strong> Tags image as <code>faiqcodes/devops-labmidterm-sp23-bai-031:latest</code>.</li>
         <li><strong>Stage 7 (Deploy to EC2):</strong> Stops existing container, spins up the new container on port 8000, and prunes dangling images.</li>
         <li><strong>Stage 8 (Health Check):</strong> Probes <code>http://3.110.121.46:8000/health</code> with a 15-second grace window, verifying HTTP 200.</li>
         <li><strong>Post Actions:</strong> Dispatches build report and metrics via <code>send_email.py</code> to evaluator.</li>
