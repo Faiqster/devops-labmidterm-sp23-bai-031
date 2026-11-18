@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DevOps Lab Midterm Report - SP23-BAI-031</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 15mm 20mm 15mm;
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 9pt;
+                color: #666;
+            }
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #1a202c;
+            line-height: 1.55;
+            font-size: 10.5pt;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .header-container {
+            border-bottom: 3px solid #2b6cb0;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .institution {
+            font-size: 11pt;
+            font-weight: 700;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .title {
+            font-size: 22pt;
+            font-weight: 800;
+            color: #1a365d;
+            margin: 4px 0 6px 0;
+        }
+        .subtitle {
+            font-size: 12pt;
+            color: #4a5568;
+            margin: 0;
+        }
+        .badge-row {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+            padding: 3px 10px;
+            border-radius: 9999px;
+            font-size: 9pt;
+            font-weight: 600;
+            border: 1px solid #bee3f8;
+        }
+        .badge-success {
+            background-color: #f0fff4;
+            color: #276749;
+            border-color: #c6f6d5;
+        }
+        h2 {
+            font-size: 13.5pt;
+            color: #2c5282;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 4px;
+            margin-top: 22px;
+            margin-bottom: 10px;
+            page-break-after: avoid;
+        }
+        h3 {
+            font-size: 11pt;
+            color: #2d3748;
+            margin-top: 14px;
+            margin-bottom: 6px;
+            page-break-after: avoid;
+        }
+        p {
+            margin: 6px 0;
+        }
+        .form-card {
+            background-color: #f7fafc;
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 15px 0 20px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .form-title {
+            font-weight: 800;
+            font-size: 11pt;
+            color: #2b6cb0;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 4px;
+        }
+        .meta-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10pt;
+        }
+        .meta-table td {
+            padding: 5px 8px;
+            vertical-align: top;
+        }
+        .meta-table td.label {
+            font-weight: 700;
+            color: #4a5568;
+            width: 28%;
+            border-right: 1px solid #e2e8f0;
+        }
+        .meta-table td.value {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-weight: 600;
+            color: #1a202c;
+            width: 72%;
+            word-break: break-all;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 9.5pt;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid #e2e8f0;
+            padding: 7px 10px;
+            text-align: left;
+        }
+        .data-table th {
+            background-color: #edf2f7;
+            color: #2d3748;
+            font-weight: 700;
+        }
+        .data-table tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+        code, pre {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 9pt;
+        }
+        pre {
+            background-color: #1a202c;
+            color: #e2e8f0;
+            padding: 10px 14px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 8px 0;
+            line-height: 1.45;
+        }
+        .inline-code {
+            background-color: #edf2f7;
+            color: #c53030;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 9pt;
+        }
+        .flow-diagram {
+            background: #edf2f7;
+            border-left: 4px solid #3182ce;
+            padding: 10px 14px;
+            margin: 12px 0;
+            font-family: monospace;
+            font-size: 9pt;
+            white-space: pre;
+            line-height: 1.35;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+        .footer-note {
+            font-size: 8.5pt;
+            color: #718096;
+            margin-top: 25px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <div class="institution">COMSATS University Islamabad &bull; Department of Computer Science</div>
+        <div class="title">DevOps Lab Midterm Project Report</div>
+        <div class="subtitle">CSC418: DevOps &bull; Autonomous Machine Learning Pipeline with CI/CD</div>
+        <div class="badge-row">
+            <span class="badge">Student ID: SP23-BAI-031</span>
+            <span class="badge badge-success">Pipeline: Automated &amp; Verified</span>
+            <span class="badge badge-success">Tests: 19/19 Passed (100%)</span>
+            <span class="badge">AWS EC2: 3.110.121.46</span>
+        </div>
+    </div>
+
+    <div class="form-card">
+        <div class="form-title">&#9733; Google Form Submission Details (Quick Reference)</div>
+        <table class="meta-table">
+            <tr>
+                <td class="label">Full Name</td>
+                <td class="value">Muhammad Faiq Khan</td>
+            </tr>
+            <tr>
+                <td class="label">Registration Number</td>
+                <td class="value">sp23-bai-031</td>
+            </tr>
+            <tr>
+                <td class="label">GitHub repo URL</td>
+                <td class="value">https://github.com/Faiqster/devops-labmidterm-sp23-bai-031.git</td>
+            </tr>
+            <tr>
+                <td class="label">Containerize API URL</td>
+                <td class="value">http://3.110.121.46:8000/metrics</td>
+            </tr>
+            <tr>
+                <td class="label">Sender Email Address</td>
+                <td class="value">m.faiq.khan78@gmail.com</td>
+            </tr>
+            <tr>
+                <td class="label">DockerHub Image Name</td>
+                <td class="value">faiqster/devops-labmidterm-sp23-bai-031:latest</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>1. Executive Summary &amp; Architecture</h2>
+    <p>
+        This report documents the design, implementation, and deployment of a continuous integration and continuous deployment (CI/CD) pipeline for an automated Machine Learning service. The system automatically fetches grading datasets, trains and validates an ML classifier, executes a comprehensive 19-point test suite, packages the application inside an optimized Docker container, and deploys it to a production AWS EC2 instance. Upon successful deployment, an automated email notification containing live metrics is delivered to the evaluator.
+    </p>
+
+    <div class="flow-diagram">
+[GitHub Repository] ---> (Git Push Webhook) ---> [Jenkins on AWS EC2 (3.110.121.46)]
+                                                           |
+                                      +--------------------+--------------------+
+                                      |                                         |
+                            [1. Fetch Latest Data]                      [2. Train Model]
+                             (generate_dataset.py)                        (train.py)
+                                      |                                         |
+                            [3. Run Pytest Suite]                       [4. Build Docker]
+                             (19 automated tests)                         (Dockerfile)
+                                      |                                         |
+                            [5. Deploy to EC2]                          [6. Health Check]
+                             (Port 8000 Container)                       (GET /health 200)
+                                      |                                         |
+                            +---------+-----------------------------------------+
+                            |
+                   [7. Post-Build Actions]
+                   - GET /metrics & POST /predict exposed on Port 8000
+                   - Email dispatched to qasimalik@gmail.com within 10 minutes
+    </div>
+
+    <h2>2. System Components &amp; Implementation Details</h2>
+
+    <h3>2.1 Automated Data Ingestion (<code>generate_dataset.py</code>)</h3>
+    <p>
+        The dataset ingestion module generates synthetic training samples representing customer behavioral telemetry: <code>basket_volatility</code>, <code>stock_gap</code>, <code>promotion_load</code>, and <code>delivery_delay</code> with a binary target <code>label</code>. In the Jenkins pipeline, this module ensures fresh data ingestion prior to every training cycle.
+    </p>
+
+    <h3>2.2 Model Training Pipeline (<code>train.py</code>)</h3>
+    <p>
+        The training script computes deterministic SHA256 hashes of the dataset, fits a Logistic Regression model via scikit-learn, validates accuracy against a strict threshold, bundles the model and feature schemas via <code>joblib</code> into <code>artifacts/model.joblib</code>, and records pipeline telemetry into <code>artifacts/metrics.json</code>.
+    </p>
+
+    <div class="page-break"></div>
+
+    <h3>2.3 Comprehensive Automated Test Suite (<code>tests/test_pipeline.py</code>)</h3>
+    <p>
+        A 19-test automated verification suite guarantees model stability and compliance prior to image building:
+    </p>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Test Category</th>
+                <th>Test Case Name</th>
+                <th>Validation Objective</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="7"><strong>Artifact Integrity</strong></td>
+                <td><code>test_metrics_file_exists</code></td>
+                <td>Ensures <code>metrics.json</code> is written to disk</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_model_file_exists</code></td>
+                <td>Ensures <code>model.joblib</code> exists</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_student_id</code></td>
+                <td>Validates Student ID equals <code>SP23-BAI-031</code></td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_accuracy_in_range</code></td>
+                <td>Confirms accuracy &isin; [0.0, 1.0]</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_accuracy_above_baseline</code></td>
+                <td>Requires accuracy &ge; 0.65</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_training_rows_minimum</code></td>
+                <td>Confirms dataset rows &ge; 100</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_model_version_present</code></td>
+                <td>Validates deterministic version hash format</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td rowspan="7"><strong>Model Bundle</strong></td>
+                <td><code>test_bundle_has_model_key</code></td>
+                <td>Checks model object in bundle dict</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_bundle_has_features_key</code></td>
+                <td>Checks feature list in bundle dict</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_features_match_config</code></td>
+                <td>Verifies 4 specific feature names</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_predict_proba_shape</code></td>
+                <td>Validates output probability array shape (1, 2)</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_predict_proba_sums_to_one</code></td>
+                <td>Validates probability mass sums to 1.0</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_handles_missing_values</code></td>
+                <td>Confirms pipeline imputes NaN gracefully</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_batch_prediction</code></td>
+                <td>Confirms vector prediction across multiple records</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td rowspan="4"><strong>Dataset Validation</strong></td>
+                <td><code>test_dataset_exists</code></td>
+                <td>Verifies CSV existence in <code>dataset/</code></td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_dataset_minimum_rows</code></td>
+                <td>Verifies minimum sample size &ge; 100</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_dataset_has_required_columns</code></td>
+                <td>Validates all 5 columns present</td>
+                <td>PASSED</td>
+            </tr>
+            <tr>
+                <td><code>test_label_binary</code></td>
+                <td>Confirms target label has exactly 2 classes (0 and 1)</td>
+                <td>PASSED</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>2.4 Docker Containerization (<code>Dockerfile</code>)</h3>
+    <p>
+        The container image utilizes a slim base (<code>python:3.11-slim</code>) with minimal runtime overhead. It pre-packages FastAPI, Uvicorn, scikit-learn, joblib, and pandas, copying the validated <code>artifacts/</code> and application code. Port 8000 is exposed to serve real-time inferences.
+    </p>
+
+    <h3>2.5 Jenkins CI/CD Pipeline (<code>Jenkinsfile</code>)</h3>
+    <p>
+        The declarative pipeline runs on the AWS EC2 instance under the job name <strong><code>MIDTERM-SP23-BAI-031</code></strong>:
+    </p>
+    <ul>
+        <li><strong>Trigger:</strong> Automated GitHub push webhook (<code>githubPush()</code>).</li>
+        <li><strong>Stage 1 (Checkout):</strong> Fetches latest commit and registers Git SHA.</li>
+        <li><strong>Stage 2 (Setup Python):</strong> Creates a clean virtual environment and installs dependencies.</li>
+        <li><strong>Stage 3 (Fetch Latest Data):</strong> Runs <code>generate_dataset.py --rows 300</code>.</li>
+        <li><strong>Stage 4 (Train Model):</strong> Executes <code>train.py</code> and persists artifacts.</li>
+        <li><strong>Stage 5 (Run Tests):</strong> Executes the 19 pytest cases. Build terminates on failure.</li>
+        <li><strong>Stage 6 (Build Docker Image):</strong> Tags image as <code>faiqster/devops-labmidterm-sp23-bai-031:latest</code>.</li>
+        <li><strong>Stage 7 (Deploy to EC2):</strong> Stops existing container, spins up the new container on port 8000, and prunes dangling images.</li>
+        <li><strong>Stage 8 (Health Check):</strong> Probes <code>http://3.110.121.46:8000/health</code> with a 15-second grace window, verifying HTTP 200.</li>
+        <li><strong>Post Actions:</strong> Dispatches build report and metrics via <code>send_email.py</code> to evaluator.</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h2>3. Production Verification &amp; Live Telemetry</h2>
+
+    <h3>3.1 Live Endpoint Verification (AWS EC2: <code>3.110.121.46:8000</code>)</h3>
+    <p>
+        The containerized service was queried directly over the public internet. Below are the verified responses:
+    </p>
+
+    <p><strong>1. Health Probe (<code>GET /health</code>):</strong></p>
+    <pre>HTTP/1.1 200 OK
+{"status": "ok"}</pre>
+
+    <p><strong>2. Metrics Telemetry (<code>GET /metrics</code>):</strong></p>
+    <pre>HTTP/1.1 200 OK
+{
+  "student_id": "SP23-BAI-031",
+  "accuracy": 0.853333,
+  "training_rows": 300,
+  "model_version": "0166d4fb9068",
+  "dataset_sha256": "0166d4fb90683f1e29795f15b84f226ebb24ed63c2dd7a0ed8824ad71d4e5b73",
+  "git_sha": "087317e06eef452560b160d321b19ae2724e07aa"
+}</pre>
+
+    <p><strong>3. Model Inference (<code>POST /predict</code>):</strong></p>
+    <pre>POST /predict HTTP/1.1
+Content-Type: application/json
+Payload: {"records": [{"basket_volatility": 0.5, "stock_gap": -0.2, "promotion_load": 0.8, "delivery_delay": 0.1}]}
+
+Response (HTTP 200 OK):
+{
+  "predictions": [1],
+  "probabilities": [0.854989]
+}</pre>
+
+    <h2>4. Post-Build Automated Email Notification</h2>
+    <p>
+        Requirement 5 demands an automated notification email sent to <code>qasimalik@gmail.com</code> from <code>m.faiq.khan78@gmail.com</code>, with the subject line explicitly containing <strong><code>SP23-BAI-031</code></strong>, arriving within 10 minutes of deployment.
+    </p>
+    <ul>
+        <li><strong>Script:</strong> <code>send_email.py</code></li>
+        <li><strong>Sender:</strong> <code>m.faiq.khan78@gmail.com</code></li>
+        <li><strong>Recipient:</strong> <code>qasimalik@gmail.com</code></li>
+        <li><strong>Subject:</strong> <code>[CSC418 Midterm] Deployment Notification - SP23-BAI-031</code></li>
+        <li><strong>Protocol:</strong> Dual-port SMTP fallback (Port 587 STARTTLS &amp; Port 465 SSL) for high reliability.</li>
+        <li><strong>Body Content:</strong> Student ID, Build Number, Git Commit SHA, Model Accuracy, Dataset SHA, and Live EC2 Endpoint URLs.</li>
+    </ul>
+
+    <h2>5. AWS EC2 Infrastructure Optimizations</h2>
+    <ul>
+        <li><strong>Disk Space &amp; Temp Memory Tuning:</strong> Remounted <code>/tmp</code> as a 1.5GB <code>tmpfs</code> in <code>/etc/fstab</code> to resolve Jenkins <code>TemporarySpaceMonitor</code> threshold errors.</li>
+        <li><strong>Swap Memory Allocation:</strong> Allocated 512MB swap file on <code>/swapfile</code> to safeguard scikit-learn compilation against OOM conditions without exhausting root disk storage.</li>
+        <li><strong>Docker Daemon:</strong> Service configured under systemd with non-root access granted to both <code>ubuntu</code> and <code>jenkins</code> service accounts.</li>
+    </ul>
+
+    <div class="footer-note">
+        DevOps Midterm Project &bull; Student Reg: SP23-BAI-031 &bull; Generated on November 18, 2026
+    </div>
+
+</body>
+</html>
